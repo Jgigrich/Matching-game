@@ -1,14 +1,5 @@
-/*
- * Create a list that holds all of your cards
- */
-
-
-/*
- * Display the cards on the page
- *   - shuffle the list of cards using the provided "shuffle" method below
- *   - loop through each card and create its HTML
- *   - add each card's HTML to the page
- */
+let numOfSets = 8;
+let numInSets = 2;
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -24,6 +15,102 @@ function shuffle(array) {
 
     return array;
 }
+
+const iconPool = ["fa-snowflake","fa-paper-plane","fa-anchor","fa-bolt", "fa-ambulance",
+                   "fa-cube","fa-leaf","fa-bicycle","fa-bomb", "fa-fire-extinguisher",
+                   "fa-moon", "fa-poo", "fa-quidditch", "fa-skull", "fa-train"];
+
+const icons = [];
+
+function getIcons(numOfSets, numInSets) {
+  for(let i=0; i< numOfSets; i++){
+    for(let j=0; j< numInSets; j++){
+      icons.push(iconPool[i]);
+    }
+  }
+}
+
+const openCards = [];
+let moves = 0;
+let running = true;
+
+function cardClick(e) {
+  if(e.target.tagName !== "UL" && running) {
+    let card;
+    if(e.target.tagName === "I") {card = e.target.parentElement;}
+    else {card = e.target;}
+    if(!card.classList.contains("open")) {
+      flipCard(card);
+      openCards.push(card);
+    }
+    if(openCards.length === numInSets) {
+      updateMoves();
+      if(cardsMatch(openCards)) {
+        matched();
+      }
+      else {
+        setTimeout(noMatch, 1000);
+        running = false;
+      }
+    }
+  }
+}
+
+function updateMoves() {
+  moves++;
+  let moveText = moves;
+  moveText === 1 ? moveText += " Move" : moveText += " Moves";
+  document.querySelector('.moves').textContent = moveText;
+}
+
+function flipCard(card) {
+  card.classList.toggle('show');
+  card.classList.toggle('open');
+}
+
+function cardsMatch(arr) {
+  let toMatch = arr[0].firstChild.classList.value
+  for(let i=1; i<arr.length; i++) {
+    if(arr[i].firstChild.classList.value !== toMatch) {
+      return false
+    }
+  }
+  return true;
+}
+
+function matched() {
+  console.log("matched");
+  openCards.length = 0;
+}
+
+function noMatch() {
+  for(let card of openCards) {
+    flipCard(card);
+  }
+  openCards.length = 0;
+  running = true;
+}
+
+function init() {
+  shuffle(iconPool);
+  getIcons(numOfSets, numInSets);
+  shuffle(icons);
+  const deckContainer = document.querySelector('#deck');
+  const deck = document.createElement('ul');
+  deck.classList.add('deck');
+  deck.addEventListener("click", cardClick);
+  for(let icon of icons) {
+    const card = document.createElement('li');
+    card.classList.add('card');
+    card.innerHTML = `<i class="fas ${icon}"></i>`
+    deck.appendChild(card);
+  }
+  deckContainer.appendChild(deck);
+}
+
+
+init();
+
 
 
 /*
