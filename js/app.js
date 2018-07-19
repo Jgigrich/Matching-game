@@ -108,9 +108,21 @@ function init() {
   deckContainer.appendChild(deck);
 }
 
-
 init();
 
+const time = {
+  ellapsed: 0,
+        id: null,
+     start: function(){this.id = setInterval( ()=>{this.ellapsed++;},1000) },
+      stop: function(){clearInterval(this.id)},
+   getTime: function(){
+              let minutes = Math.floor(this.ellapsed / 60);
+              let seconds = this.ellapsed % 60;
+              if(minutes === 0) {return `${seconds} seconds`}
+              if(minutes === 1) {return `${minutes} minute and ${seconds} seconds`}
+              else {return `${minutes} minutes and ${seconds} seconds`}
+            }
+};
 
 
 /*
