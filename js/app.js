@@ -20,13 +20,13 @@ const time = {
       host: document.querySelector(".time"),
   ellapsed: 0,
         id: null,
-     start: function(){this.id = setInterval( ()=>{
-                                                this.ellapsed++;
-                                                this.update();
-                                              },1000)
-            },
+     start: function(){this.id = setInterval( ()=>{this.update()},1000)},
       stop: function(){clearInterval(this.id)},
-    update: function(){
+    update: function() {
+              this.ellapsed++;
+              this.display();
+            },
+   display: function(){
               let minutes = Math.floor(this.ellapsed / 60);
               let seconds = this.ellapsed % 60;
               if(minutes === 0) {this.host.textContent = `${seconds} seconds`}
