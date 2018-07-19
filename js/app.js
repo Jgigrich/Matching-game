@@ -16,6 +16,25 @@ function shuffle(array) {
     return array;
 }
 
+const time = {
+      host: document.querySelector(".time"),
+  ellapsed: 0,
+        id: null,
+     start: function(){this.id = setInterval( ()=>{
+                                                this.ellapsed++;
+                                                this.update();
+                                              },1000)
+            },
+      stop: function(){clearInterval(this.id)},
+    update: function(){
+              let minutes = Math.floor(this.ellapsed / 60);
+              let seconds = this.ellapsed % 60;
+              if(minutes === 0) {this.host.textContent = `${seconds} seconds`}
+              else if(minutes === 1) {this.host.textContent = `${minutes} minute and ${seconds} seconds`}
+              else {this.host.textContent = `${minutes} minutes and ${seconds} seconds`}
+            }
+};
+
 const iconPool = ["fa-snowflake","fa-paper-plane","fa-anchor","fa-bolt", "fa-ambulance",
                    "fa-cube","fa-leaf","fa-bicycle","fa-bomb", "fa-fire-extinguisher",
                    "fa-moon", "fa-poo", "fa-quidditch", "fa-skull", "fa-train"];
@@ -32,6 +51,7 @@ function getIcons(numOfSets, numInSets) {
 
 const openCards = [];
 let moves = 0;
+let matches = 0;
 let running = true;
 
 function cardClick(e) {
@@ -57,6 +77,7 @@ function cardClick(e) {
 }
 
 function updateMoves() {
+  if(moves === 0){time.start()}
   moves++;
   let moveText = moves;
   moveText === 1 ? moveText += " Move" : moveText += " Moves";
@@ -79,7 +100,11 @@ function cardsMatch(arr) {
 }
 
 function matched() {
-  console.log("matched");
+  matches++;
+  let el = document.querySelector(".matches");
+  if(matches === 1) {el.textContent = `${matches} match`}
+  else {el.textContent = `${matches} matches`}
+  if(matches === numOfSets) {time.stop()}
   openCards.length = 0;
 }
 
@@ -110,19 +135,7 @@ function init() {
 
 init();
 
-const time = {
-  ellapsed: 0,
-        id: null,
-     start: function(){this.id = setInterval( ()=>{this.ellapsed++;},1000) },
-      stop: function(){clearInterval(this.id)},
-   getTime: function(){
-              let minutes = Math.floor(this.ellapsed / 60);
-              let seconds = this.ellapsed % 60;
-              if(minutes === 0) {return `${seconds} seconds`}
-              if(minutes === 1) {return `${minutes} minute and ${seconds} seconds`}
-              else {return `${minutes} minutes and ${seconds} seconds`}
-            }
-};
+
 
 
 /*
