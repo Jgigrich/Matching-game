@@ -79,7 +79,14 @@ h1 {
 .deck .card.match {
     cursor: default;
     background: #02ccba;
-    font-size: 33px;
+}
+
+.fas {
+  transition: transform 0.5s;
+}
+
+.fas.match {
+    transform: rotateZ(1080deg);
 }
 
 /*

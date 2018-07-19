@@ -105,6 +105,10 @@ function matched() {
   if(matches === 1) {el.textContent = `${matches} match`}
   else {el.textContent = `${matches} matches`}
   if(matches === numOfSets) {time.stop()}
+  for(let card of openCards) {
+    card.classList.add("match");
+    card.firstChild.classList.add("match");
+  }
   openCards.length = 0;
 }
 
