@@ -76,10 +76,18 @@ function cardClick() {
   }
 }
 
+function updateStars() {
+  const stars = document.querySelector(".stars").children;
+  if(moves === 4){stars[2].firstChild.classList.remove("shine")}
+  else if(moves === 6){stars[1].firstChild.classList.remove("shine")}
+  else if(moves === 8){stars[0].firstChild.classList.remove("shine")}
+}
+
 function updateMoves() {
   if(moves === 0){time.start()}
   moves++;
   document.querySelector('.moves .score-value').textContent = moves;
+  updateStars();
 }
 
 function flipCard(card) {
@@ -119,6 +127,10 @@ function noMatch() {
 const deckContainer = document.querySelector('#deck');
 
 function restart() {
+  let stars = document.querySelectorAll(".fa-star");
+  for(let star of stars) {
+    star.classList.add("shine");
+  }
   moves = 0;
   document.querySelector('.moves .score-value').textContent = moves;
   matches = 0;

@@ -90,7 +90,7 @@ h1 {
     border: 0.5vmin solid #af2626;
 }
 
-.fas {
+.card .fas {
   transition: transform 0.5s;
   text-shadow: -3px 3px 10px #000000;
 }
@@ -118,6 +118,11 @@ h1 {
     padding: 0;
     display: inline-block;
     margin: 0 5px 10px 0;
+    text-shadow:
+		-1px -1px 0 #000,
+		1px -1px 0 #000,
+		-1px 1px 0 #000,
+		1px 1px 0 #000;
 }
 
 .score-panel .stars li {
@@ -125,14 +130,14 @@ h1 {
     display: inline-block;
 }
 
+.stars .shine {
+  color: #e8e85f;
+}
+
 .moves,
 .matches,
 .time {
   text-align: left;
-}
-
-.score-text {
-
 }
 
 .score-value {
