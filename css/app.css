@@ -6,14 +6,15 @@ html {
 *::before,
 *::after {
     box-sizing: inherit;
+    margin: 0;
+    padding: 0;
 }
 
 html,
 body {
     width: 100%;
     height: 100%;
-    margin: 0;
-    padding: 0;
+
 }
 
 body {
@@ -22,10 +23,18 @@ body {
 }
 
 .container {
+    margin: 0 auto;
+    max-width: 960px;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    border: 2px solid orange;
+}
+
+header {
+  text-align: center;
+  border: 2px solid red;
 }
 
 h1 {
@@ -38,26 +47,28 @@ h1 {
  */
 
 .deck {
-    width: 660px;
-    min-height: 680px;
+
+    /*min-height: 680px;*/
     background: radial-gradient(rgba(0,0,0,1) 30%, rgba(255,255,255,0));
-    padding: 32px;
+    padding: 0;
     border-radius: 10px;
     box-shadow: 12px 15px 20px 0 rgba(46, 61, 73, 0.5);
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
-    margin: 0 0 3em;
+    flex: 1;
+
 }
 
 .deck .card {
-    height: 125px;
-    width: 125px;
+    margin: 0.5vmin;
+    width: 20vmin;
+    height: 20vmin;
     background: #2e3d49;
     font-size: 0;
     color: #ffffff;
-    border-radius: 8px;
+    border-radius: 1vmin;
     cursor: pointer;
     display: flex;
     justify-content: center;
@@ -70,16 +81,13 @@ h1 {
     transform: rotateY(180deg);
     background: #017bc1;
     cursor: default;
-}
-
-.deck .card.show {
-    font-size: 33px;
+    font-size: calc(25px + 5vmin);
 }
 
 .deck .card.match {
     cursor: default;
     background: #017bc1;
-    border: 2px solid #af2626;
+    border: 0.5vmin solid #af2626;
 }
 
 .fas {
@@ -96,9 +104,13 @@ h1 {
  */
 
 .score-panel {
-    text-align: left;
-    width: 500px;
+    width: 100%;
+    text-align: center;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
     margin-bottom: 10px;
+    border: 2px solid green;
 }
 
 .score-panel .stars {
@@ -114,7 +126,7 @@ h1 {
 }
 
 .score-panel .restart {
-    float: right;
+    margin: 0 10px;
     cursor: pointer;
 }
 
