@@ -39,6 +39,7 @@ const iconPool = ["fa-snowflake","fa-paper-plane","fa-anchor","fa-bolt", "fa-amb
 const icons = [];
 
 function getIcons(numOfSets, numInSets) {
+  icons.length = 0;
   for(let i=0; i< numOfSets; i++){
     for(let j=0; j< numInSets; j++){
       icons.push(iconPool[i]);
@@ -110,20 +111,18 @@ function noMatch() {
   running = true;
 }
 
+
+
 function init() {
   shuffle(iconPool);
   getIcons(numOfSets, numInSets);
   shuffle(icons);
   const deckContainer = document.querySelector('#deck');
-  let deck;
   if(document.querySelector('.deck')){
-    deck = document.querySelector('.deck');
-    deck.innerHTML = "";
+    deckContainer.removeChild(deckContainer.firstElementChild);
   }
-  else{
-    deck = document.createElement('ul');
-    deck.classList.add('deck');
-  }
+  deck = document.createElement('ul');
+  deck.classList.add('deck');
   for(let icon of icons) {
     const card = document.createElement('li');
     card.classList.add('card');
@@ -134,6 +133,7 @@ function init() {
   deckContainer.appendChild(deck);
 }
 
+document.querySelector('.restart-btn').addEventListener("click", init);
 init();
 
 
