@@ -15,10 +15,10 @@ function shuffle(array) {
 }
 
 const time = {
-      host: document.querySelector(".time .score-value"),
+      host: document.querySelector(".time .score-value"), //display element
   ellapsed: 0,
         id: null,
-     start: function(){this.id = setInterval( ()=>{this.update()},1000)},
+     start: function(){this.id = setInterval(()=>{this.update()},1000)},
       stop: function(){clearInterval(this.id)},
     update: function() {
               this.ellapsed++;
@@ -29,6 +29,11 @@ const time = {
               let seconds = this.ellapsed % 60;
               let txt = `${minutes} min, ${seconds} sec`;
               this.host.textContent = txt;
+            },
+     reset: function() {
+              this.stop();
+              this.ellapsed = 0;
+              this.display();
             }
 };
 
@@ -118,9 +123,7 @@ function restart() {
   document.querySelector('.moves .score-value').textContent = moves;
   matches = 0;
   document.querySelector(".matches .score-value").textContent = matches
-  time.stop();
-  time.ellapsed = 0;
-  time.display();
+  time.reset();
   deckContainer.removeChild(deckContainer.firstElementChild);
   init();
 }
