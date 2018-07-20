@@ -15,7 +15,7 @@ function shuffle(array) {
 }
 
 const time = {
-      host: document.querySelector(".time"),
+      host: document.querySelector(".time .score-value"),
   ellapsed: 0,
         id: null,
      start: function(){this.id = setInterval( ()=>{this.update()},1000)},
@@ -27,9 +27,8 @@ const time = {
    display: function(){
               let minutes = Math.floor(this.ellapsed / 60);
               let seconds = this.ellapsed % 60;
-              if(minutes === 0) {this.host.textContent = `${seconds} seconds`}
-              else if(minutes === 1) {this.host.textContent = `${minutes} minute and ${seconds} seconds`}
-              else {this.host.textContent = `${minutes} minutes and ${seconds} seconds`}
+              let txt = `${minutes} min, ${seconds} sec`;
+              this.host.textContent = txt;
             }
 };
 
@@ -72,9 +71,7 @@ function cardClick() {
 function updateMoves() {
   if(moves === 0){time.start()}
   moves++;
-  let moveText = moves;
-  moveText === 1 ? moveText += " Move" : moveText += " Moves";
-  document.querySelector('.moves').textContent = moveText;
+  document.querySelector('.moves .score-value').textContent = moves;
 }
 
 function flipCard(card) {
@@ -94,9 +91,7 @@ function cardsMatch(arr) {
 
 function matched() {
   matches++;
-  let el = document.querySelector(".matches");
-  if(matches === 1) {el.textContent = `${matches} match`}
-  else {el.textContent = `${matches} matches`}
+  document.querySelector(".matches .score-value").textContent = `${matches}`;
   if(matches === numOfSets) {time.stop()}
   for(let card of openCards) {
     card.classList.add("match");

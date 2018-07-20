@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css" integrity="sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ" crossorigin="anonymous">
     <link rel="stylesheet prefetch" href="https://fonts.googleapis.com/css?family=Coda">
+    <link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet">
     <link rel="stylesheet" href="css/app.css">
 </head>
 <body>
@@ -22,16 +23,19 @@
         		<li><i class="fas fa-star"></i></li>
         		<li><i class="fas fa-star"></i></li>
         	</ul>
-
-        	<span class="moves">0 moves</span>
-          <span class="matches">0 matches</span>
-          <span class="time">0 seconds</span>
-
-          <div class="restart">
-        		<i class="fas fa-poo"></i>
-        	</div>
+          <div class="moves">
+            <span class="score-text">moves:</span><span class="score-value">0</span>
+          </div>
+          <div class="matches">
+            <span class="score-text">matches:</span><span class="score-value">0</span>
+          </div>
+          <div class="time">
+            <span class="score-text">time:</span><span class="score-value">0 min, 0 sec</span>
+          </div>
+          <button>setting</button>
+          <button>restart</button>
         </section>
-        
+
         <section id="deck">
         </section>
     </div>
