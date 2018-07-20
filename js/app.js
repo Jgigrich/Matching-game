@@ -115,8 +115,15 @@ function init() {
   getIcons(numOfSets, numInSets);
   shuffle(icons);
   const deckContainer = document.querySelector('#deck');
-  const deck = document.createElement('ul');
-  deck.classList.add('deck');
+  let deck;
+  if(document.querySelector('.deck')){
+    deck = document.querySelector('.deck');
+    deck.innerHTML = "";
+  }
+  else{
+    deck = document.createElement('ul');
+    deck.classList.add('deck');
+  }
   for(let icon of icons) {
     const card = document.createElement('li');
     card.classList.add('card');
