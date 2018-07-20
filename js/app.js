@@ -52,18 +52,20 @@ let matches = 0;
 let running = true;
 
 function cardClick() {
-  if(!this.classList.contains("open")) {
-    flipCard(this);
-    openCards.push(this);
-  }
-  if(openCards.length === numInSets) {
-    updateMoves();
-    if(cardsMatch(openCards)) {
-      matched();
+  if(running){
+    if(!this.classList.contains("open")) {
+      flipCard(this);
+      openCards.push(this);
     }
-    else {
-      setTimeout(noMatch, 1000);
-      running = false;
+    if(openCards.length === numInSets) {
+      updateMoves();
+      if(cardsMatch(openCards)) {
+        matched();
+      }
+      else {
+        setTimeout(noMatch, 1000);
+        running = false;
+      }
     }
   }
 }
