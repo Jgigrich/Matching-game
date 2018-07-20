@@ -52,24 +52,19 @@ let moves = 0;
 let matches = 0;
 let running = true;
 
-function cardClick(e) {
-  if(e.target.tagName !== "UL" && running) {
-    let card;
-    if(e.target.tagName === "I") {card = e.target.parentElement;}
-    else {card = e.target;}
-    if(!card.classList.contains("open")) {
-      flipCard(card);
-      openCards.push(card);
+function cardClick() {
+  if(!this.classList.contains("open")) {
+    flipCard(this);
+    openCards.push(this);
+  }
+  if(openCards.length === numInSets) {
+    updateMoves();
+    if(cardsMatch(openCards)) {
+      matched();
     }
-    if(openCards.length === numInSets) {
-      updateMoves();
-      if(cardsMatch(openCards)) {
-        matched();
-      }
-      else {
-        setTimeout(noMatch, 1000);
-        running = false;
-      }
+    else {
+      setTimeout(noMatch, 1000);
+      running = false;
     }
   }
 }
@@ -125,10 +120,10 @@ function init() {
   const deckContainer = document.querySelector('#deck');
   const deck = document.createElement('ul');
   deck.classList.add('deck');
-  deck.addEventListener("click", cardClick);
   for(let icon of icons) {
     const card = document.createElement('li');
     card.classList.add('card');
+    card.addEventListener("click", cardClick);
     card.innerHTML = `<i class="fas ${icon}"></i>`
     deck.appendChild(card);
   }
