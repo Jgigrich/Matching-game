@@ -94,7 +94,7 @@ function cardsMatch(arr) {
 
 function matched() {
   matches++;
-  document.querySelector(".matches .score-value").textContent = `${matches}`;
+  document.querySelector(".matches .score-value").textContent = matches;
   if(matches === numOfSets) {time.stop()}
   for(let card of openCards) {
     card.classList.add("match");
@@ -111,16 +111,24 @@ function noMatch() {
   running = true;
 }
 
+const deckContainer = document.querySelector('#deck');
 
+function restart() {
+  moves = 0;
+  document.querySelector('.moves .score-value').textContent = moves;
+  matches = 0;
+  document.querySelector(".matches .score-value").textContent = matches
+  time.stop();
+  time.ellapsed = 0;
+  time.display();
+  deckContainer.removeChild(deckContainer.firstElementChild);
+  init();
+}
 
 function init() {
   shuffle(iconPool);
   getIcons(numOfSets, numInSets);
   shuffle(icons);
-  const deckContainer = document.querySelector('#deck');
-  if(document.querySelector('.deck')){
-    deckContainer.removeChild(deckContainer.firstElementChild);
-  }
   deck = document.createElement('ul');
   deck.classList.add('deck');
   for(let icon of icons) {
@@ -133,7 +141,7 @@ function init() {
   deckContainer.appendChild(deck);
 }
 
-document.querySelector('.restart-btn').addEventListener("click", init);
+document.querySelector('.restart-btn').addEventListener("click", restart);
 init();
 
 
