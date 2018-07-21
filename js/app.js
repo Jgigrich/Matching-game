@@ -156,7 +156,13 @@ function init() {
   deckContainer.appendChild(deck);
 }
 
+function openModal() {
+  console.log(document.querySelector('.modal'));
+  document.querySelector('.modal').style.display = 'block';
+}
+
 document.querySelector('.restart-btn').addEventListener("click", restart);
+document.querySelector('.settings-btn').addEventListener("click", openModal);
 init();
 
 
