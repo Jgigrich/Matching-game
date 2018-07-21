@@ -78,9 +78,9 @@ function cardClick() {
 
 function updateStars() {
   const stars = document.querySelector(".stars").children;
-  if(moves === 4){stars[2].firstChild.classList.remove("shine")}
-  else if(moves === 6){stars[1].firstChild.classList.remove("shine")}
-  else if(moves === 8){stars[0].firstChild.classList.remove("shine")}
+  if(moves === 13){stars[2].firstChild.classList.remove("shine")}
+  else if(moves === 16){stars[1].firstChild.classList.remove("shine")}
+  else if(moves === 19){stars[0].firstChild.classList.remove("shine")}
 }
 
 function updateMoves() {
@@ -157,7 +157,10 @@ function init() {
 }
 
 function openModal() {
-  console.log(document.querySelector('.modal'));
+  const scorePanel = document.querySelector('.score-panel').cloneNode(true);
+  scorePanel.classList.add("modal-score");
+  const modalContent = document.querySelector('.modal-content');
+  modalContent.appendChild(scorePanel);
   document.querySelector('.modal').style.display = 'block';
 }
 
