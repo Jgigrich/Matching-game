@@ -15,7 +15,7 @@ function shuffle(array) {
 }
 
 const time = {
-      host: document.querySelector(".time .score-value"), //display element
+      host: document.querySelector(".time .score-value"), // display container
   ellapsed: 0,
         id: null,
      start: function(){this.id = setInterval(()=>{this.update()},1000)},
@@ -44,7 +44,7 @@ const iconPool = ["fa-snowflake","fa-paper-plane","fa-anchor","fa-bolt", "fa-amb
 const icons = [];
 
 function getIcons(numOfSets, numInSets) {
-  icons.length = 0;
+  icons.length = 0;  // empty the icons array (for restart)
   for(let i=0; i< numOfSets; i++){
     for(let j=0; j< numInSets; j++){
       icons.push(iconPool[i]);
@@ -55,7 +55,7 @@ function getIcons(numOfSets, numInSets) {
 const openCards = [];
 let moves = 0;
 let matches = 0;
-let running = true;
+let running = true;  // running allows the player to select cards
 
 function cardClick() {
   if(running){
@@ -69,7 +69,7 @@ function cardClick() {
         matched();
       }
       else {
-        setTimeout(noMatch, 1000);
+        setTimeout(noMatch, 800);
         running = false;
       }
     }
@@ -91,7 +91,6 @@ function updateMoves() {
 }
 
 function flipCard(card) {
-  card.classList.toggle('show');
   card.classList.toggle('open');
 }
 
@@ -108,20 +107,23 @@ function cardsMatch(arr) {
 function matched() {
   matches++;
   document.querySelector(".matches .score-value").textContent = matches;
-  if(matches === numOfSets) {time.stop()}
   for(let card of openCards) {
-    card.classList.add("match");
-    card.firstChild.classList.add("match");
+    card.classList.add("match");  // add class of "match" to the li
+    card.firstChild.classList.add("match"); // add class to icon too
   }
-  openCards.length = 0;
+  openCards.length = 0;   // empty the array
+  if(matches === numOfSets) {
+    time.stop()
+    setTimeout(openModal, 800); // wait for the match animation to finish
+  }
 }
 
 function noMatch() {
   for(let card of openCards) {
-    flipCard(card);
+    flipCard(card);       // close the unmatched cards
   }
-  openCards.length = 0;
-  running = true;
+  openCards.length = 0;   // empty the array
+  running = true;         // restart the abilty to select cards
 }
 
 const deckContainer = document.querySelector('#deck');
@@ -129,14 +131,14 @@ const deckContainer = document.querySelector('#deck');
 function restart() {
   let stars = document.querySelectorAll(".fa-star");
   for(let star of stars) {
-    star.classList.add("shine");
+    star.classList.add("shine");  // lightup the stars
   }
   moves = 0;
   document.querySelector('.moves .score-value').textContent = moves;
   matches = 0;
   document.querySelector(".matches .score-value").textContent = matches
   time.reset();
-  deckContainer.removeChild(deckContainer.firstElementChild);
+  deckContainer.removeChild(deckContainer.firstElementChild);  // get rid of the deck
   init();
 }
 
@@ -156,12 +158,26 @@ function init() {
   deckContainer.appendChild(deck);
 }
 
+const modal = document.querySelector('.modal');
+const modalContent = document.querySelector('.modal-content');
+
 function openModal() {
   const scorePanel = document.querySelector('.score-panel').cloneNode(true);
   scorePanel.classList.add("modal-score");
-  const modalContent = document.querySelector('.modal-content');
   modalContent.appendChild(scorePanel);
-  document.querySelector('.modal').style.display = 'block';
+  document.querySelector('.modal .restart-btn').addEventListener('click', closeModal);
+  modal.classList.remove("hide");
+  modal.classList.add("show");
+  modal.style.display = "block";
+}
+
+function closeModal() {
+  modal.classList.replace("show", "hide");
+  setTimeout(()=>{
+    modalContent.removeChild(modalContent.lastElementChild);
+    modal.style.display = "none";
+    restart();
+  }, 650);
 }
 
 document.querySelector('.restart-btn').addEventListener("click", restart);

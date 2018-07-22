@@ -30,6 +30,7 @@ body {
     align-items: center;
     flex-direction: column;
     position: relative;
+    border-radius: 2vmin;
 }
 
 header {
@@ -164,20 +165,31 @@ h1 {
   position: absolute;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0,0,0,0.5);
   z-index: 1;
-  animation: open-modal 1s;
+  border-radius: 1.5vmin;
 }
 
-@keyframes open-modal {
+.modal.show {
+  animation-name: openModal;
+  animation-duration: 1s;
+}
+
+.modal.hide {
+  animation-name: closeModal;
+  animation-duration: 0.7s;
+}
+
+@keyframes openModal {
   0% {opacity: 0;}
   100% {opacity: 1;}
 }
-/*
-.modal-show {
-  display: block;
+
+@keyFrames closeModal {
+  0% {opacity: 1;}
+  100% {opacity: 0;}
 }
-*/
+
 .modal-content {
   position: absolute;
   transform: translateX(-50%);
