@@ -1,4 +1,4 @@
-let numOfSets = 8;  // number of sets in the game
+let numOfSets = 8;  // number of card sets in the game
 let numInSets = 2;  // number of cards in each set
 
 // Shuffle function from http://stackoverflow.com/a/2450976
@@ -64,21 +64,31 @@ function cardClick() {
       flipCard(this);
       openCards.push(this);
     }
-    console.log(openCards.length, numInSets);
     if(openCards.length === numInSets) {
       updateMoves();
       if(cardsMatch(openCards)) {
         matched();
       }
       else {
-        console.log("no match");
         setTimeout(noMatch, 800);
-        running = false;
+        running = false;  // no selecting cards until the current set flips back over
       }
     }
   }
 }
 
+function flipCard(card) {
+  card.classList.toggle("open");
+}
+
+function updateMoves() {
+  if(moves === 0){time.start()}
+  moves++;
+  document.querySelector(".moves .score-value").textContent = moves;
+  updateStars();
+}
+
+/* star ranking decreases as the player makes more moves */
 function updateStars() {
   const stars = document.querySelector(".stars").children;
   if(moves === 13){stars[2].firstChild.classList.remove("shine")}
@@ -86,17 +96,7 @@ function updateStars() {
   else if(moves === 19){stars[0].firstChild.classList.remove("shine")}
 }
 
-function updateMoves() {
-  if(moves === 0){time.start()}
-  moves++;
-  document.querySelector('.moves .score-value').textContent = moves;
-  updateStars();
-}
-
-function flipCard(card) {
-  card.classList.toggle('open');
-}
-
+/* check if all the cards in an array are all the same */
 function cardsMatch(arr) {
   let toMatch = arr[0].firstChild.classList.value
   for(let i=1; i<arr.length; i++) {
@@ -120,7 +120,6 @@ function matched() {
     setTimeout(openWinner, 800); // wait for the match animation to finish
   }
 }
-//numOfSets
 
 function noMatch() {
   for(let card of openCards) {
@@ -130,7 +129,7 @@ function noMatch() {
   running = true;         // restart the abilty to select cards
 }
 
-const deckContainer = document.querySelector('#deck');
+const deckContainer = document.querySelector("#deck");
 
 function restart() {
   let stars = document.querySelectorAll(".fa-star");
@@ -138,7 +137,7 @@ function restart() {
     star.classList.add("shine");  // lightup the stars
   }
   moves = 0;
-  document.querySelector('.moves .score-value').textContent = moves;
+  document.querySelector(".moves .score-value").textContent = moves;
   matches = 0;
   document.querySelector(".matches .score-value").textContent = matches
   time.reset();
@@ -150,11 +149,11 @@ function init() {
   shuffle(iconPool);
   getIcons(numOfSets, numInSets);
   shuffle(icons);
-  deck = document.createElement('ul');
-  deck.classList.add('deck');
+  deck = document.createElement("ul");
+  deck.classList.add("deck");
   for(let icon of icons) {
-    const card = document.createElement('li');
-    card.classList.add('card');
+    const card = document.createElement("li");
+    card.classList.add("card");
     card.addEventListener("click", cardClick);
     card.innerHTML = `<i class="fas ${icon}"></i>`
     deck.appendChild(card);
@@ -162,8 +161,8 @@ function init() {
   deckContainer.appendChild(deck);
 }
 
-const modal = document.querySelector('.modal');
-const modalContent = document.querySelector('.modal-content');
+const modal = document.querySelector(".modal");
+const modalContent = document.querySelector(".modal-content");
 
 function openModal() {
   modal.classList.remove("hide");
@@ -171,33 +170,20 @@ function openModal() {
   modal.style.display = "block";
 }
 
-function closeModal(e) {
-  modal.classList.replace("show", "hide");
-  setTimeout(()=>{
-    document.querySelector('.winner-heading').classList.remove("show");
-    document.querySelector('.settings').classList.remove("show");
-    if(!e.target.classList.contains("settings-modal")){
-      modalContent.removeChild(modalContent.lastElementChild);
-    }
-    modal.style.display = "none";
-    if(e.target.classList.contains("restart-btn")){restart();}
-  }, 650);
-}
-
 function openWinner() {
-  const scorePanel = document.querySelector('.score-panel').cloneNode(true);
+  const scorePanel = document.querySelector(".score-panel").cloneNode(true);
   scorePanel.classList.add("modal-score");
   modalContent.appendChild(scorePanel);
-  document.querySelector('.modal .restart-btn').addEventListener('click', closeWinner);
-  document.querySelector('.modal .settings-btn').addEventListener('click', closeWinner);
-  document.querySelector('.winner-heading').classList.add("show");
+  document.querySelector(".modal .restart-btn").addEventListener("click", closeWinner);
+  document.querySelector(".modal .settings-btn").addEventListener("click", closeWinner);
+  document.querySelector(".winner-heading").classList.add("show");
   openModal();
 }
 
 function closeWinner(e) {
-  modal.classList.replace("show", "hide");
+  modal.classList.replace("show", "hide");  // run the fade out animation
   setTimeout(()=>{
-    document.querySelector('.winner-heading').classList.remove("show");
+    document.querySelector(".winner-heading").classList.remove("show");
     modalContent.removeChild(modalContent.lastElementChild);
     modal.style.display = "none";
     if(e.target.classList.contains("restart-btn")){restart();}
@@ -206,41 +192,26 @@ function closeWinner(e) {
 }
 
 function openSettings() {
-  document.querySelector('.settings').classList.add("show");
+  document.querySelector(".settings").classList.add("show");
   openModal();
 }
 
 function closeSettings(e) {
-  console.dir(document.querySelector('input[name="game"]:checked').id)
-  modal.classList.replace("show", "hide");
+  modal.classList.replace("show", "hide");  // run the fade out animation
   setTimeout(()=>{
-    document.querySelector('.settings').classList.remove("show");
+    document.querySelector(".settings").classList.remove("show");
     modal.style.display = "none";
     if(e.target.classList.contains("settings-new-game")){
-      const selected = document.querySelector('input[name="game"]:checked').id;
-      numOfSets = parseInt(selected[0], 10);
-      numInSets = parseInt(selected[2], 10);
+      const selected = document.querySelector("input[name="game"]:checked").id;
+      numOfSets = parseInt(selected[0], 10);  // get the number of sets form the selected id
+      numInSets = parseInt(selected[2], 10);  // get the number of cards in a set form the selected id
       restart();
     }
   }, 650);
 }
 
-document.querySelector('.settings-cancel').addEventListener("click", closeSettings);
-document.querySelector('.settings-new-game').addEventListener("click", closeSettings);
-document.querySelector('.restart-btn').addEventListener("click", restart);
-document.querySelector('.settings-btn').addEventListener("click", openSettings);
+document.querySelector(".settings-cancel").addEventListener("click", closeSettings);
+document.querySelector(".settings-new-game").addEventListener("click", closeSettings);
+document.querySelector(".restart-btn").addEventListener("click", restart);
+document.querySelector(".settings-btn").addEventListener("click", openSettings);
 init();
-
-
-
-
-/*
- * set up the event listener for a card. If a card is clicked:
- *  - display the card's symbol (put this functionality in another function that you call from this one)
- *  - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)
- *  - if the list already has another card, check to see if the two cards match
- *    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)
- *    + if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)
- *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
- *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
- */
