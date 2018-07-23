@@ -39,8 +39,10 @@ const time = {
 };
 
 const iconPool = ["fa-snowflake","fa-paper-plane","fa-anchor","fa-bolt", "fa-ambulance",
-                   "fa-cube","fa-leaf","fa-bicycle","fa-bomb", "fa-fire-extinguisher",
-                   "fa-moon", "fa-poo", "fa-quidditch", "fa-skull", "fa-train"];
+                   "fa-spa","fa-leaf","fa-bicycle","fa-bomb", "fa-fire-extinguisher",
+                   "fa-moon", "fa-poo", "fa-quidditch", "fa-skull", "fa-train", "fa-tree",
+                   "fa-birthday-cake", "fa-chess-rook", "fa-frog", "fa-umbrella"
+                 ];
 
 const icons = [];  // holds the icons used in the current game
 
