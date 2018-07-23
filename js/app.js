@@ -1,5 +1,5 @@
-let numOfSets = 8;
-let numInSets = 2;
+let numOfSets = 8;  // number of sets in the game
+let numInSets = 2;  // number of cards in each set
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -14,6 +14,7 @@ function shuffle(array) {
     return array;
 }
 
+/******  timer object *******/
 const time = {
       host: document.querySelector(".time .score-value"), // display container
   ellapsed: 0,
@@ -41,7 +42,7 @@ const iconPool = ["fa-snowflake","fa-paper-plane","fa-anchor","fa-bolt", "fa-amb
                    "fa-cube","fa-leaf","fa-bicycle","fa-bomb", "fa-fire-extinguisher",
                    "fa-moon", "fa-poo", "fa-quidditch", "fa-skull", "fa-train"];
 
-const icons = [];
+const icons = [];  // holds the icons used in the current game
 
 function getIcons(numOfSets, numInSets) {
   icons.length = 0;  // empty the icons array (for restart)
@@ -63,12 +64,14 @@ function cardClick() {
       flipCard(this);
       openCards.push(this);
     }
+    console.log(openCards.length, numInSets);
     if(openCards.length === numInSets) {
       updateMoves();
       if(cardsMatch(openCards)) {
         matched();
       }
       else {
+        console.log("no match");
         setTimeout(noMatch, 800);
         running = false;
       }
@@ -114,9 +117,10 @@ function matched() {
   openCards.length = 0;   // empty the array
   if(matches === numOfSets) {
     time.stop()
-    setTimeout(openModal, 800); // wait for the match animation to finish
+    setTimeout(openWinner, 800); // wait for the match animation to finish
   }
 }
+//numOfSets
 
 function noMatch() {
   for(let card of openCards) {
@@ -162,26 +166,69 @@ const modal = document.querySelector('.modal');
 const modalContent = document.querySelector('.modal-content');
 
 function openModal() {
-  const scorePanel = document.querySelector('.score-panel').cloneNode(true);
-  scorePanel.classList.add("modal-score");
-  modalContent.appendChild(scorePanel);
-  document.querySelector('.modal .restart-btn').addEventListener('click', closeModal);
   modal.classList.remove("hide");
   modal.classList.add("show");
   modal.style.display = "block";
 }
 
-function closeModal() {
+function closeModal(e) {
   modal.classList.replace("show", "hide");
   setTimeout(()=>{
-    modalContent.removeChild(modalContent.lastElementChild);
+    document.querySelector('.winner-heading').classList.remove("show");
+    document.querySelector('.settings').classList.remove("show");
+    if(!e.target.classList.contains("settings-modal")){
+      modalContent.removeChild(modalContent.lastElementChild);
+    }
     modal.style.display = "none";
-    restart();
+    if(e.target.classList.contains("restart-btn")){restart();}
   }, 650);
 }
 
+function openWinner() {
+  const scorePanel = document.querySelector('.score-panel').cloneNode(true);
+  scorePanel.classList.add("modal-score");
+  modalContent.appendChild(scorePanel);
+  document.querySelector('.modal .restart-btn').addEventListener('click', closeWinner);
+  document.querySelector('.modal .settings-btn').addEventListener('click', closeWinner);
+  document.querySelector('.winner-heading').classList.add("show");
+  openModal();
+}
+
+function closeWinner(e) {
+  modal.classList.replace("show", "hide");
+  setTimeout(()=>{
+    document.querySelector('.winner-heading').classList.remove("show");
+    modalContent.removeChild(modalContent.lastElementChild);
+    modal.style.display = "none";
+    if(e.target.classList.contains("restart-btn")){restart();}
+    else {openSettings();}
+  }, 650);
+}
+
+function openSettings() {
+  document.querySelector('.settings').classList.add("show");
+  openModal();
+}
+
+function closeSettings(e) {
+  console.dir(document.querySelector('input[name="game"]:checked').id)
+  modal.classList.replace("show", "hide");
+  setTimeout(()=>{
+    document.querySelector('.settings').classList.remove("show");
+    modal.style.display = "none";
+    if(e.target.classList.contains("settings-new-game")){
+      const selected = document.querySelector('input[name="game"]:checked').id;
+      numOfSets = parseInt(selected[0], 10);
+      numInSets = parseInt(selected[2], 10);
+      restart();
+    }
+  }, 650);
+}
+
+document.querySelector('.settings-cancel').addEventListener("click", closeSettings);
+document.querySelector('.settings-new-game').addEventListener("click", closeSettings);
 document.querySelector('.restart-btn').addEventListener("click", restart);
-document.querySelector('.settings-btn').addEventListener("click", openModal);
+document.querySelector('.settings-btn').addEventListener("click", openSettings);
 init();
 
 

@@ -203,26 +203,8 @@ h1 {
   text-align: center;
 }
 
-.modal-header {
-  height: 10px;
-  text-align: right;
-}
-
-.close-btn {
-  border: none;
-  font-size: 1.8em;
-  padding: 0;
-  margin: 0;
-  position: absolute;
-  top: 3px;
-  right: 15px;
-}
-
-.modal-main {
-
-}
-
-.modal-content h1 {
+.winner-heading {
+  display: none;
   margin: 15px 0 5px 0;
 }
 
@@ -238,11 +220,27 @@ h1 {
 
 .modal-content .btn {
   font-size: 0.8em;
-  margin: 10px 0 0 0;
+  margin: 10px 5px 0 5px;
   border-radius: 10px;
-  box-shadow: 2px 2px 10px;
+  box-shadow: 2px 2px 5px;
 }
 
-.modal-score * {
-  /*border: 1px solid red;*/
+.settings {
+  display: none;
+}
+
+.settings-form {
+  margin: 0 0 10px 0;
+}
+
+.settings-heading {
+  margin: 15px 0 5px 0;
+}
+
+.game-size {
+  padding: 5px 10px;
+}
+
+.show {
+  display: block;
 }

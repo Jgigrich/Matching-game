@@ -41,9 +41,34 @@
 
         <div class="modal">
           <div class="modal-content">
-              <button class="close-btn" aria-label="Close Winner Modal Box">&times;</button>
-              <h1>Winner!</h1>
+              <h1 class="winner-heading">Winner!</h1>
+              <div class="settings">
+                <h1 class="settings-heading">Settings</h1>
+                <form action="" class="settings-form">
+                  <fieldset class="game-size">
+                    <legend>Game Size</legend>
+                    <div class="radio-container">
+                        <input type="radio" id="8x2" name="game" checked />
+                        <label for="8x2">Find 8 sets of 2 cards each</label>
+                    </div>
+                    <div class="radio-container">
+                        <input type="radio" id="5x3" name="game" />
+                        <label for="5x3">Find 5 sets of 3 cards each</label>
+                    </div>
+                    <div class="radio-container">
+                        <input type="radio" id="4x4" name="game" />
+                        <label for="4x4">Find 4 sets of 4 cards each</label>
+                    </div>
+                  </fieldset>
+                </form>
+                <button class="btn settings-cancel">cancel</button>
+                <button class="btn settings-new-game">new game</button>
+              </div>
           </div>
+        </div>
+
+        <div class="settings">
+
         </div>
     </div>
 
