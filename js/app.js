@@ -202,7 +202,7 @@ function closeSettings(e) {
     document.querySelector(".settings").classList.remove("show");
     modal.style.display = "none";
     if(e.target.classList.contains("settings-new-game")){
-      const selected = document.querySelector("input[name="game"]:checked").id;
+      const selected = document.querySelector("input[name='game']:checked").id;
       numOfSets = parseInt(selected[0], 10);  // get the number of sets form the selected id
       numInSets = parseInt(selected[2], 10);  // get the number of cards in a set form the selected id
       restart();
